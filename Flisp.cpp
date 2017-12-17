@@ -1,4 +1,6 @@
 # Make-a-Lisp-named-Fucklisp--Flis
+//至于我为什么弃坑c++，而用python来写，是因为c++得字符串处理能力太操蛋了，所以我用python已经实现
+//了一个只有运算能力的脚本
 //There needed to be solved a problem so show abandoned pit
 //Find the solution and continue
 #include <iostream>
