@@ -1,13 +1,25 @@
 #coding=UTF-8
 ptr=0
+gcptr=0
+name=[1]*100
+gc=[1]*100
 def delblank(code):
 	global ptr
 	while(code[ptr]==" "):
               ptr+=1
 def getnum(code):
 	global ptr
+	global gcptr
+	global name
+	global gc
 	delblank(code)
 	x=0
+	y=0
+	for i in range(0,gcptr):
+		y=len(name[i])
+		if(code[ptr:y]==name[i]):
+			ptr+=y
+			return gc[i]
 	if(code[ptr]=='('):
 		x=interpret(code)
 	else:
@@ -17,8 +29,30 @@ def getnum(code):
 		x=int(code[ptr:p])
 		ptr=p
 	return x
+def gconstant(code):
+	global ptr
+	global gcptr
+	global name
+	global gc
+	delblank(code)
+	p=ptr
+	while(code[p]!=' '):
+		p+=1
+	n=code[ptr:p]
+	ptr=p
+	print(n)
+	c=getnum(code)
+	name[gcptr]=n
+	gc[gcptr]=c
+	gcptr+=1
 def interpret(code):
 	global ptr
+	global gcptr
+	global name
+	global gc
+	for i in range(0,gcptr):
+		if(code==name[i]):
+			return gc[i]
 	if(code[ptr]=='('):
 		ptr+=1
 		delblank(code)
@@ -56,16 +90,17 @@ def interpret(code):
 		    return num
 		elif(code[ptr:ptr+3]=='def'):
 			ptr+=3
-			
+			gconstant(code)
 		else:
-			print("!!!")	
+			print("!!!")		
 def main():
 	global ptr
 	ptr=0
 	code=input('->')
 	print(code)
 	result=interpret(code)
-	print(result)
+	if(result!=None):
+		print(result)
 	main()
 if __name__ == '__main__':
 	print('---------------Flisp------------------')
