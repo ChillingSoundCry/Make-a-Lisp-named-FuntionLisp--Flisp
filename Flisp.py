@@ -17,7 +17,7 @@ def getnum(code):
 	y=0
 	for i in range(0,gcptr):
 		y=len(name[i])
-		if(code[ptr:y]==name[i]):
+		if(code[ptr:ptr+y]==name[i]):
 			ptr+=y
 			return gc[i]
 	if(code[ptr]=='('):
@@ -26,9 +26,10 @@ def getnum(code):
 		p=ptr
 		while(code[p]<="9" and code[p]>="0"):
 			p+=1
-		x=int(code[ptr:p])
+		x=int(code[ptr:p].encode("utf-8"))
 		ptr=p
 	return x
+	print(x,'secnd')
 def gconstant(code):
 	global ptr
 	global gcptr
@@ -91,6 +92,19 @@ def interpret(code):
 		elif(code[ptr:ptr+3]=='def'):
 			ptr+=3
 			gconstant(code)
+		elif(code[ptr:ptr+5]=='print'):
+			ptr+=5
+			delblank(code)
+			if(code[ptr]=='"'):
+				ptr+=1
+				while(code[ptr]!='"'):
+					print(code[ptr],end='')
+					ptr+=1
+			elif(code[ptr]=='.'):
+				print(end='\n')
+		elif(code[ptr:ptr+4]=='help'):
+			print('暂时只有加减乘除和定义常量')
+			print('方法为def 输出为print 输入为getLine')
 		else:
 			print("!!!")		
 def main():
@@ -105,5 +119,6 @@ def main():
 if __name__ == '__main__':
 	print('---------------Flisp------------------')
 	print('A Lisp Like Funtion Program Lungrauge!')
+	print('------This is only a Interpreter------')
 	print('--------------v 0.5-------------------')
 	main()
