@@ -100,7 +100,13 @@ def interpret(code):
 				while(code[ptr]!='"'):
 					print(code[ptr],end='')
 					ptr+=1
-			elif(code[ptr]=='.'):
+                        else:
+                                for i in range(0,gcptr):
+                                        y=len(name[i])
+                                        if(code[ptr:ptr+y]==name[i]):
+                                                ptr+=y
+                                        print(gc[i],end='')
+			if(code[ptr]=='.'):
 				print(end='\n')
 		elif(code[ptr:ptr+4]=='help'):
 			print('暂时只有加减乘除和定义常量')
